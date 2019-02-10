@@ -1,5 +1,6 @@
 package mancala;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Principale {
@@ -14,6 +15,9 @@ public class Principale {
 		System.out.println("Choisissez la difficulté ");
 		int difficulte = sc.nextInt();
 		ArbitreAwale.lancerUneNouvellePartie(difficulte);
+		
+		System.out.println("nbrgraine init : " + ArbitreAwale.Partie.getNbrGrainesEnJeu() );
+		
 		/*
 		Awale awale = new Awale("","",2);
 		awale.initialisationJeu();
@@ -31,21 +35,26 @@ public class Principale {
 			int coupJouee;
 					
 			// gestion tour:
+			Random rand = new Random();
 			if( ArbitreAwale.gestionTour() == ArbitreAwale.joueur1){
-				coupJouee = (int) Math.random() * (6 - 0) ;
+				coupJouee = rand.nextInt(5 - 0 + 1) + 0;
+				System.out.println("coupJouee par joueur 1 : " +  coupJouee);
 				if( ArbitreAwale.verifierCoupValide(ArbitreAwale.joueur1,coupJouee) )
 					ArbitreAwale.joueur1.jouerUnCoup(coupJouee,ArbitreAwale);
 			}
 			else {
-				coupJouee = (int) Math.random() * ( 12 - 6 ) ;
+				coupJouee = rand.nextInt(11 - 6 + 1) + 6;
+				System.out.println("coupJouee par joueur 2 : " + coupJouee);
 				if( ArbitreAwale.verifierCoupValide(ArbitreAwale.joueur2,coupJouee) )
 					ArbitreAwale.joueur2.jouerUnCoup(coupJouee,ArbitreAwale);
 			}
 			
-			System.out.println(ArbitreAwale.Partie.getNbrGrainesEnJeu());
+			ArbitreAwale.stockerEtatMouvement(ArbitreAwale.Partie.etatActuel());
+			
+			System.out.println("Nbr graines en jeu : " + ArbitreAwale.Partie.getNbrGrainesEnJeu());
 			
 		}
-		
+		ArbitreAwale.getGagnant();
 		
 	}
 

@@ -13,14 +13,22 @@ public abstract class JoueurAwale extends Joueur{
 	public void jouerUnCoup(int caseJouee, GameManagerAwale gameManagerAwale) {//mise a jour des valeurs du plateau
 		int CaseActuelle = caseJouee;
 		int nbrGrainesADeplacer = gameManagerAwale.Partie.getPlateau()[caseJouee];
-		gameManagerAwale.Partie.getPlateau()[caseJouee]=0;
+		gameManagerAwale.Partie.setPlateau( 0, caseJouee );
 		
 		while(nbrGrainesADeplacer>0) {
+			System.out.println("nbr graine a deplacer : " + nbrGrainesADeplacer );
+			System.out.println(" gameManagerAwale.Partie.getPlateau()["+ CaseActuelle +"] = " + gameManagerAwale.Partie.getPlateau()[CaseActuelle] );
+			
 			if(caseJouee==0 && CaseActuelle==11) CaseActuelle = 1;
-			else if(CaseActuelle == caseJouee-1)CaseActuelle += 2;
+			else if(CaseActuelle == caseJouee-1) {
+				if(CaseActuelle == 10)	CaseActuelle = 0;
+				else	CaseActuelle += 2;
+			}
 			else if (CaseActuelle == 11) CaseActuelle = 0;
 			else CaseActuelle++;
-			gameManagerAwale.Partie.getPlateau()[CaseActuelle]++;
+			
+			gameManagerAwale.Partie.setPlateau( gameManagerAwale.Partie.getPlateau()[CaseActuelle] + 1 , CaseActuelle);
+			
 			nbrGrainesADeplacer--;			
 		}
 		//enlever les graines = 2 ou =3
@@ -40,11 +48,16 @@ public abstract class JoueurAwale extends Joueur{
 			max= 11; 
 		}
 		while( CaseActuelle <= max && CaseActuelle >= min && ( gameManagerAwale.Partie.getPlateau()[CaseActuelle] == 2 || gameManagerAwale.Partie.getPlateau()[CaseActuelle] == 3 ) ) {
-			this.setScore(gameManagerAwale.Partie.getPlateau()[CaseActuelle]);
+			
+			this.setScore(this.getScore() + gameManagerAwale.Partie.getPlateau()[CaseActuelle]);
+			System.out.println("score joueur " + this.getNumeroJoueur() +": " + this.getScore());
 			
 			gameManagerAwale.Partie.setNbrGrainesEnJeu(gameManagerAwale.Partie.getNbrGrainesEnJeu() - gameManagerAwale.Partie.getPlateau()[CaseActuelle] );
+			System.out.println("nbr graines en jeu : " + gameManagerAwale.Partie.getNbrGrainesEnJeu());
 			
-			gameManagerAwale.Partie.getPlateau()[CaseActuelle] = 0;
+			gameManagerAwale.Partie.setPlateau(0, CaseActuelle );
+			System.out.println("gameManagerAwale.Partie.getPlateau()[" + CaseActuelle + "] : " + gameManagerAwale.Partie.getPlateau()[CaseActuelle]);
+			
 			CaseActuelle--;
 		}
 		

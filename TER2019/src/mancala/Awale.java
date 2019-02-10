@@ -15,7 +15,7 @@ public class Awale extends Jeu{
 	public int getNbrGrainesEnJeu(){ return this.nbrGrainesEnJeu;}
 	public void setNbrGrainesEnJeu(int nbrGrainesEnJeu){ this.nbrGrainesEnJeu = nbrGrainesEnJeu;}
 	public int[] getPlateau(){ return this.plateau;}
-	public void setPlateau(int[] plateau){ this.plateau = plateau;}
+	public void setPlateau(int valeurModifier,int caseModifier){ this.plateau[caseModifier] = valeurModifier;}
 	
 	//methods :
 	public void stockerJoueur(JoueurAwale joueur1,JoueurAwale joueur2) {// pouvoir reprendre une partie plus tard
@@ -27,9 +27,8 @@ public class Awale extends Jeu{
 	}
 	@Override
 	public void initialisationJeu() {
-		int tabInt[] = {4,4,4,4,4,4,4,4,4,4,4,4};
+		this.plateau = new int[] {4,4,4,4,4,4,4,4,4,4,4,4};
 		setNbrGrainesEnJeu(48);
-		setPlateau(tabInt);
 		
 	}
 	
